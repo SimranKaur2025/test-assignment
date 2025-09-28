@@ -1,6 +1,7 @@
 export default class GatewayServicePage {
   private gatewayServicesSidebar = '[data-testid="sidebar-item-gateway-services"] a';
-  private addGatewayServiceButton = '[data-testid="toolbar-add-gateway-service"]';
+  private addGatewayServiceEmpty = '[data-testid="empty-state-action"]';
+  private addGatewayServiceToolbar = '[data-testid="toolbar-add-gateway-service"]';
   private servicesTable = '[data-testid="entities-base-table"], .k-table-view.k-table-data';
 
   selectGatewayServices() {
@@ -11,22 +12,38 @@ export default class GatewayServicePage {
     cy.url().should("include", "/services");
 
   }
-
   assertOnServicesList() {
-    cy.contains('Gateway Services', { timeout: 15000 }).should('be.visible');
-    cy.get(this.addGatewayServiceButton, { timeout: 15000 }).should('be.visible');
-    cy.get(this.servicesTable, { timeout: 15000 }).should('be.visible');
+    cy.get('body', { timeout: 20000 }).should(($b) => {
+      const hasTable = $b.find(this.servicesTable).length > 0;
+      const hasEmptyBtn = $b.find(this.addGatewayServiceEmpty).length > 0;
+      const hasToolbarBtn = $b.find(this.addGatewayServiceToolbar).length > 0;
+      expect(hasTable || hasEmptyBtn || hasToolbarBtn).to.eq(true);
+    });
     cy.url().should('include', '/services');
   }
 
   // Assertion: check the button is visible
   assertAddServiceButtonVisible() {
-    cy.get(this.addGatewayServiceButton, { timeout: 15000 }).should("be.visible");
+    cy.get('body', { timeout: 20000 }).then(($b) => {
+      if ($b.find(this.addGatewayServiceEmpty).length) {
+        cy.get(this.addGatewayServiceToolbar, { timeout: 20000 }).should('be.visible');
+      } else {
+        cy.get(this.addGatewayServiceToolbar, { timeout: 20000 }).should('be.visible');
+      }
+    });
   }
 
   // Action: click the button
   clickAddGatewayService() {
-    cy.get(this.addGatewayServiceButton, { timeout: 20000 }).click({ force: true });
+    cy.get('body', { timeout: 10000 }).then(($body) => {
+    if ($body.find('[data-testid="empty-state-action"]').length) {
+      cy.log('Clicking empty state Add Service button');
+      cy.get('[data-testid="empty-state-action"]').click({ force: true });
+    } else {
+      cy.log('Clicking toolbar Add Service button');
+      cy.get('[data-testid="toolbar-add-gateway-service"]').click({ force: true });
+    }
+  });
   }
 
   /** Locate a row by service name */

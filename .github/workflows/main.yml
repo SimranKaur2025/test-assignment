@@ -11,11 +11,6 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
 
-    env:
-      # Keep your tests pointed at local Kong Manager in docker (8002)
-      # If your cypress.config.ts already sets baseUrl, you can omit this.
-      CYPRESS_baseUrl: http://localhost:8002
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,22 +32,13 @@ jobs:
           # wait up to 10 min for Kong Manager (adjust if needed)
           npx wait-on -t 600000 http://localhost:8002
 
-      - name: Show repo layout (debug)
-        run: |
-          pwd
-          ls -la
-          ls -la cypress || true
-          ls -la cypress/e2e || true
-
-      - name: Verify Cypress install
-        run: npx cypress --version
-
-      - name: Run Cypress directly
-        run: |
-          npx cypress run \
-            --browser chrome \
-            --config baseUrl=http://localhost:8002 \
-            --spec "cypress/e2e/create_service_full_url.cy.ts"
+      - name: Run Cypress (Chrome headless)
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          headless: true
+          config-file: cypress.config.ts
+          spec: "cypress/e2e/**/*.cy.ts"
 
       # Artifacts help reviewers see failures without rerunning locally
       - name: Upload videos

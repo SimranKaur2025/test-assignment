@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cypress run --browser chrome --headless",
     "cy:open": "cypress open --e2e",
     "cy:run": "cypress run --e2e",
     "report:merge": "mochawesome-merge reports/mochawesome/mochawesome_*.json > reports/mochawesome/mochawesome.json",

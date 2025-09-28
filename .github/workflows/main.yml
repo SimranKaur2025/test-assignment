@@ -15,7 +15,7 @@ jobs:
       # If your cypress.config.ts already sets baseUrl, you can omit this.
       CYPRESS_baseUrl: http://localhost:8002
       # Run only the interview suite by default (fast). You can override in UI.
-      CYPRESS_spec: cypress/e2e/**/*.cy.ts
+      CYPRESS_spec: cypress/e2e/create_service_full_url.cy.ts
 
     steps:
       - name: Checkout

@@ -106,3 +106,4 @@ export default class GatewayServicePage {
     // row should be gone
     cy.get(this.servicesTable).should('not.contain', name);
   }
+}

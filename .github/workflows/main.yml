@@ -1,0 +1,78 @@
+name: e2e
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    env:
+      # Keep your tests pointed at local Kong Manager in docker (8002)
+      # If your cypress.config.ts already sets baseUrl, you can omit this.
+      CYPRESS_baseUrl: http://localhost:8002
+      # Run only the interview suite by default (fast). You can override in UI.
+      CYPRESS_spec: cypress/e2e/**/*.cy.ts
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      # Start Kong stack if docker-compose.yml exists in repo
+      - name: Start Kong (docker-compose)
+        if: ${{ hashFiles('docker-compose.yml') != '' }}
+        run: |
+          docker compose up -d
+          # wait up to 10 min for Kong Manager (adjust if needed)
+          npx wait-on -t 600000 http://localhost:8002
+
+      - name: Run Cypress (Chrome headless)
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          headless: true
+          config-file: cypress.config.ts
+          spec: ${{ env.CYPRESS_spec }}
+
+      # Artifacts help reviewers see failures without rerunning locally
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            reports/**
+            junit/*.xml
+          if-no-files-found: ignore
+
+      - name: Teardown
+        if: ${{ always() && hashFiles('docker-compose.yml') != '' }}
+        run: docker compose down --remove-orphans

@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-22T15:48:38.805Z",
+    "end": "2025-09-22T15:48:52.443Z",
+    "duration": 13638,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "f11e05af-d4bc-440f-9534-22d1d6851c1a",
+      "title": "",
+      "fullFile": "cypress\\e2e\\e2e_newservice_route.cy.ts",
+      "file": "cypress\\e2e\\e2e_newservice_route.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f471060f-ab4a-4aa0-90af-533b3e881c1e",
+          "title": "Kong Manager - Workspaces Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load the Workspaces page and show default workspace",
+              "fullTitle": "Kong Manager - Workspaces Page should load the Workspaces page and show default workspace",
+              "timedOut": null,
+              "duration": 13141,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Navigate to the Workspaces page\nworkspacesPage.visitWorkspacesPage();\n// Step 2: Verify default workspace is visible\n//workspacesPage.assertDefaultWorkspaceVisible();\n// Step 3: Verify default workspace name is 'default'\n//workspacesPage.assertDefaultWorkspaceName(\"default\");\n// Step 2: Click on the default workspace\nworkspacesPage.clickDefaultWorkspace();\n// Step 3: Select Gateway Service from the side-bar\noverviewPage.selectGatewayServices();\n// Step 4: Click upon Add New Gateway Service\noverviewPage.clickAddGatewayService();\n// Step 5: Fill out the form\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\n(0, screenshot_1.takeScreenshot)('service-created');\n//Validate success toast notification\n(0, toastNotifications_1.assertSuccessToast)(`Gateway Service \"${serviceName}\" successfully created`);",
+              "err": {},
+              "uuid": "3f27115d-f198-472f-980a-9e9cf65f9aec",
+              "parentUUID": "f471060f-ab4a-4aa0-90af-533b3e881c1e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "3f27115d-f198-472f-980a-9e9cf65f9aec"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 13141,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

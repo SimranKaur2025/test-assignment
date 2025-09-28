@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-28T13:28:49.860Z",
+    "end": "2025-09-28T13:29:05.334Z",
+    "duration": 15474,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9ba7b1b7-ba6b-4b8f-814a-02f93c6835e1",
+      "title": "",
+      "fullFile": "cypress\\e2e\\e2e_create_route.cy.ts",
+      "file": "cypress\\e2e\\e2e_create_route.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "27b92cbb-1d59-4a99-8d92-74b2d6728cd8",
+          "title": "Kong Manager - Workspaces Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load the Workspaces page and show default workspace",
+              "fullTitle": "Kong Manager - Workspaces Page should load the Workspaces page and show default workspace",
+              "timedOut": null,
+              "duration": 15345,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Navigate to the Workspaces page\nworkspacesPage.visitWorkspacesPage();\nworkspacesPage.assertOnPage();\n// Step 2: Click on the default workspace\nworkspacesPage.clickDefaultWorkspace();\n// Step 3: Select Gateway Service from the side-bar\noverviewPage.selectGatewayServices();\n// Step 4: Click upon Add New Gateway Service\noverviewPage.clickAddGatewayService();\n// Step 5: Fill out the form\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\n(0, toastNotifications_1.assertSuccessToast)(`Gateway Service \"${serviceName}\" successfully created`);\n(0, screenshot_1.attachScreenshot)('service-created');\n// Step 6: Click upon Add a Route button to add a route\nroutePage.clickAddRoute();\n// Step 7: fill required fields\nroutePage.enterName(routeName);\nroutePage.enterPath(routePath);\n// (optional) prove Save is enabled before clicking\n// cy.get(routePage.saveBtn).should('be.enabled');\n// Step 8: save the route\nroutePage.saveRoute();\n(0, screenshot_1.attachScreenshot)('route-created');\n// Step 9: verify success toast notification\n(0, toastNotifications_1.assertSuccessToast)(`Route \"${routeName}\" successfully created!`);\n// Save only routePath for proxy test\ncy.writeFile('cypress/fixtures/routePath.json', { routePath });",
+              "err": {},
+              "uuid": "b837b736-abfb-4728-8279-3e13cd3969e1",
+              "parentUUID": "27b92cbb-1d59-4a99-8d92-74b2d6728cd8",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "b837b736-abfb-4728-8279-3e13cd3969e1"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 15345,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

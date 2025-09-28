@@ -1,0 +1,31 @@
+{
+  "name": "kong-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open --e2e",
+    "cy:run": "cypress run --e2e",
+    "report:merge": "mochawesome-merge reports/mochawesome/mochawesome_*.json > reports/mochawesome/mochawesome.json",
+    "report:html": "marge reports/mochawesome/mochawesome.json -f index -o reports/mochawesome",
+    "report": "npm run report:merge && npm run report:html",
+    "test:ci": "npm run cy:run && npm run report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "cypress": "^15.2.0",
+    "cypress-dotenv": "^3.0.1",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "uuid": "^13.0.0"
+  }
+}

@@ -30,7 +30,7 @@ describe("Kong Manager - Workspaces Page", () => {
 
     // Step 2: Click on the default workspace
     workspacesPage.clickDefaultWorkspace();
-
+    cy.wait(1000);
     // Step 3: Select Gateway Service from the side-bar
     gatewayServicePage.selectGatewayServices();
 

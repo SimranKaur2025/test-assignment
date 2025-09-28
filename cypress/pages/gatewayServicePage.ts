@@ -13,19 +13,20 @@ export default class GatewayServicePage {
   }
 
   assertOnServicesList() {
-    cy.get(this.addGatewayServiceButton).should('be.visible');
-    cy.get(this.servicesTable).should('be.visible');
+    cy.contains('Gateway Services', { timeout: 15000 }).should('be.visible');
+    cy.get(this.addGatewayServiceButton, { timeout: 15000 }).should('be.visible');
+    cy.get(this.servicesTable, { timeout: 15000 }).should('be.visible');
     cy.url().should('include', '/services');
   }
 
   // Assertion: check the button is visible
   assertAddServiceButtonVisible() {
-    cy.get(this.addGatewayServiceButton).should("be.visible");
+    cy.get(this.addGatewayServiceButton, { timeout: 15000 }).should("be.visible");
   }
 
   // Action: click the button
   clickAddGatewayService() {
-    cy.get(this.addGatewayServiceButton).click({ force: true });
+    cy.get(this.addGatewayServiceButton, { timeout: 20000 }).click({ force: true });
   }
 
   /** Locate a row by service name */
@@ -105,92 +106,3 @@ export default class GatewayServicePage {
     // row should be gone
     cy.get(this.servicesTable).should('not.contain', name);
   }
-
-  // ---------- Enable/Disable toggle ----------
-
-  /** Returns the enable-toggle element inside the row (span[role="checkbox"]) */
-  private getEnableToggleInRow() {
-    // span.switch-control[data-testid="switch-control"][role="checkbox"]
-    return cy.get('@row').within(() => {
-      cy.get('span[role="checkbox"][data-testid="switch-control"]').as('toggle');
-    });
-  }
-
-  /** Assert current enabled state using aria-checked */
-  assertServiceEnabled(name: string, expected: boolean) {
-    this.getRowByServiceName(name);
-    this.getEnableToggleInRow();
-    cy.get('@toggle')
-      .should('have.attr', 'aria-checked', String(expected));
-  }
-
-  /**
-   * Set the enabled state for a service row.
-   * - When disabling, a confirm dialog appears ("Disable gateway services") -> click "Yes, disable"
-   * - When enabling, no dialog typically appears.
-   */
-  setServiceEnabled(name: string, desired: boolean) {
-    this.getRowByServiceName(name);
-    this.getEnableToggleInRow();
-
-    cy.get('@toggle').then($t => {
-      const current = $t.attr('aria-checked') === 'true';
-      if (current === desired) return; // already in desired state
-
-      // click the visual switch (the span works fine)
-      cy.wrap($t).click({ force: true });
-
-      if (desired === false) {
-        // handle confirm dialog for disable
-        cy.get('[role="dialog"]', { timeout: 10_000 })
-          .should('contain.text', 'Disable gateway services')
-          .within(() => {
-            cy.contains('button', /Yes, disable/i).click();
-          });
-      }
-
-      // wait for state to settle
-      this.getRowByServiceName(name);
-      this.getEnableToggleInRow();
-      cy.get('@toggle').should('have.attr', 'aria-checked', String(desired));
-    });
-  }
-}
-
-//  openRowActionsMenu(name: string) {
-//     this.getRowByServiceName(name);
-//     // open kebab menu
-//     cy.get('@row').within(() => {
-//       cy.get('td').last().scrollIntoView();
-//       cy.get(
-//         '[data-testid="row-actions-dropdown-trigger"]')
-//         .click({ force: true });
-//     });
-
-//     cy.get('[data-testid="action-entity-delete"]')
-//       .contains(/^delete$/i)
-//       .click({ force: true });
-//   }
-
-
-//   /** Delete service via row action menu → Delete */
-//   deleteService(name: string) {
-
-//     cy.get('[data-testid="header-actions"]').click({ force: true });
-    
-//     // Click Delete from dropdown
-//     cy.get('[data-testid="entity-button"][data-testaction="action-delete"]')
-//     .should('be.visible')
-//     .click({ force: true });
-
-//     cy.get('[role="dialog"]').within(() => {
-//     cy.contains('button', /^Delete$/i).click();
-//     });
-
-//     // success toast
-//     cy.contains(/Gateway Service ".+" successfully deleted/i, { timeout: 10_000 })
-//       .should('be.visible');
-
-//     // row should be gone
-//     cy.get(this.servicesTable).should('not.contain', name);
-//   }

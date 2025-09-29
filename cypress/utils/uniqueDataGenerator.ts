@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 export function generateUniqueServiceUrl(): string {
-  const env = Cypress.env("ENV") || "local";  // default to 'local' if not passed
-  return `https://httpbin.org/anything/${env}-service-${Date.now()}`;
+  return `https://httpbin.org/v/${Date.now().toString().slice(-5)}`;
 }
 
 // Generate a unique service name
@@ -29,3 +28,15 @@ export function generateInvalidServiceUrl(): string {
   return `invalid-url-${random}`;
 
 }
+
+export const INVALID_URLS: string[] = [
+  "abc123",                  // random string
+  "httpbin.org",             // missing protocol
+  "www.api.kong.com",        // host only, no protocol
+  "ftp://example.com",       // unsupported scheme
+  "https://",                // protocol only
+  "https://api. kong.com",   // whitespace in URL
+  "https://api!kong.com",    // illegal char in host
+  // ~82–85 chars, boundary case
+  "https://this-is-a-very-long-invalid-url-example-that-should-break-validation-because-of-length.com"
+];

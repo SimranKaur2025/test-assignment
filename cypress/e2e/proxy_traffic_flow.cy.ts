@@ -29,4 +29,22 @@ describe('Traffic flows through Proxy (200 OK)', () => {
       expect(h).to.have.property('x-kong-upstream-latency');
     });
   });
+
+  it('returns 404 for invalid path (handled by Kong)', () => {
+  const proxyUrl = Cypress.env("proxyUrl");
+  const invalidPath = "/does-not-exist";
+  const suffix = Cypress.env("suffix");
+
+  cy.request({
+    url: `${proxyUrl}${invalidPath}${suffix}`,
+    failOnStatusCode: false,
+  }).then((resp) => {
+    // Status should be 404
+    expect(resp.status).to.eq(404);
+
+    // Server should be Kong
+    expect(resp.headers).to.have.property('server');
+    expect(String(resp.headers['server']).toLowerCase()).to.match(/^kong/);
+  });
+});
 });

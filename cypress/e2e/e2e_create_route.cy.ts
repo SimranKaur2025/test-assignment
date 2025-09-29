@@ -1,6 +1,6 @@
 
 import WorkspacesPage from "../pages/workSpacesPage";
-import OverviewPage from "../pages/gatewayServicePage";
+import GatewayServicePage from "../pages/gatewayServicePage";
 import CreateServicePage from "../pages/createServicePage";
 import { getKongServiceUrl } from "../utils/uniqueDataGenerator";
 import { generateUniqueServiceName } from "../utils/uniqueDataGenerator";
@@ -10,9 +10,9 @@ import { assertSuccessToast } from "../utils/toastNotifications";
 import { attachScreenshot } from "../utils/screenshot";
 import { RoutePage } from "../pages/createRoutePage";
 
-describe("Kong Manager - Workspaces Page", () => {
+describe("E2E - Create Service and Route", () => {
   const workspacesPage = new WorkspacesPage();
-  const overviewPage = new OverviewPage();
+  const gatewayServicePage = new GatewayServicePage();
   const createServicePage = new CreateServicePage();
   const routePage = new RoutePage();
   const serviceUrl = getKongServiceUrl();
@@ -20,7 +20,7 @@ describe("Kong Manager - Workspaces Page", () => {
   const routeName = generateUniqRouteName();
   const routePath = generateUniqRoutePath();
     
-  it("should load the Workspaces page and show default workspace", () => {
+  it("should create a Gateway Service and Route successfully", () => {
     // Step 1: Navigate to the Workspaces page
     workspacesPage.visitWorkspacesPage();
     workspacesPage.assertOnPage();
@@ -29,10 +29,10 @@ describe("Kong Manager - Workspaces Page", () => {
     workspacesPage.clickDefaultWorkspace();
 
     // Step 3: Select Gateway Service from the side-bar
-    overviewPage.selectGatewayServices();
+    gatewayServicePage.selectGatewayServices();
 
     // Step 4: Click upon Add New Gateway Service
-    overviewPage.clickAddGatewayService();
+    gatewayServicePage.clickAddGatewayService();
 
     // Step 5: Fill out the form
     createServicePage.enterServiceUrl(serviceUrl);
@@ -47,9 +47,6 @@ describe("Kong Manager - Workspaces Page", () => {
     // Step 7: fill required fields
     routePage.enterName(routeName);
     routePage.enterPath(routePath);
-
-    // (optional) prove Save is enabled before clicking
-    // cy.get(routePage.saveBtn).should('be.enabled');
 
     // Step 8: save the route
     routePage.saveRoute();

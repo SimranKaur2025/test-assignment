@@ -6,14 +6,14 @@ import { generateUniqueServiceName } from "../utils/uniqueDataGenerator";
 import { assertSuccessToast } from "../utils/toastNotifications";
 import { attachScreenshot } from "../utils/screenshot";
 
-describe("Kong Manager - Workspaces Page", () => {
+describe("Duplicate Service Name", () => {
   const workspacesPage = new WorkspacesPage();
   const gatewayServicePage = new GatewayServicePage();
   const createServicePage = new CreateServicePage();
   const serviceUrl = generateUniqueServiceUrl();
   const serviceName = generateUniqueServiceName();
 
-  it("should load the Workspaces page and show default workspace", () => {
+  it("should validate duplicate service name error", () => {
     // Step 1: Navigate to the Workspaces page
     workspacesPage.visitWorkspacesPage();
     workspacesPage.assertDefaultWorkspaceName("default");

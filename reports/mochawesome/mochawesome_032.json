@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-29T14:13:55.880Z",
+    "end": "2025-09-29T14:14:03.315Z",
+    "duration": 7435,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fed60a91-8a32-441a-bd0b-8844cd4f1c58",
+      "title": "",
+      "fullFile": "cypress\\e2e\\e2e_create_route.cy.ts",
+      "file": "cypress\\e2e\\e2e_create_route.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c33c1953-7e41-4d5d-9b02-ddaa64b19925",
+          "title": "E2E - Create Service and Route",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should create a Gateway Service and Route successfully",
+              "fullTitle": "E2E - Create Service and Route should create a Gateway Service and Route successfully",
+              "timedOut": null,
+              "duration": 7252,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Navigate to the Workspaces page\nworkspacesPage.visitWorkspacesPage();\nworkspacesPage.assertOnPage();\n// Step 2: Click on the default workspace\nworkspacesPage.clickDefaultWorkspace();\n// Step 3: Select Gateway Service from the side-bar\ngatewayServicePage.selectGatewayServices();\n// Step 4: Click upon Add New Gateway Service\ngatewayServicePage.clickAddGatewayService();\n// Step 5: Fill out the form\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\n(0, toastNotifications_1.assertSuccessToast)(`Gateway Service \"${serviceName}\" successfully created`);\n(0, screenshot_1.attachScreenshot)('service-created');\n// Step 6: Click upon Add a Route button to add a route\nroutePage.clickAddRoute();\n// Step 7: fill required fields\nroutePage.enterName(routeName);\nroutePage.enterPath(routePath);\n// Step 8: save the route\nroutePage.saveRoute();\n(0, screenshot_1.attachScreenshot)('route-created');\n// Step 9: verify success toast notification\n(0, toastNotifications_1.assertSuccessToast)(`Route \"${routeName}\" successfully created!`);\n// Save only routePath for proxy test\ncy.writeFile('cypress/fixtures/routePath.json', { routePath });",
+              "err": {},
+              "uuid": "4d0b0eae-a40d-4f2b-a4e7-244150e1c99d",
+              "parentUUID": "c33c1953-7e41-4d5d-9b02-ddaa64b19925",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "4d0b0eae-a40d-4f2b-a4e7-244150e1c99d"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 7252,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-29T13:27:16.767Z",
+    "end": "2025-09-29T13:27:34.444Z",
+    "duration": 17677,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0aeceb5d-7176-4f33-a0f3-00426dd86d3c",
+      "title": "",
+      "fullFile": "cypress\\e2e\\disable_enable_service.cy.ts",
+      "file": "cypress\\e2e\\disable_enable_service.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "01abcb27-bda8-4684-95d5-38f331aae53e",
+          "title": "Disable / Enable Service",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should create a Gateway Service successfully",
+              "fullTitle": "Disable / Enable Service should create a Gateway Service successfully",
+              "timedOut": null,
+              "duration": 17501,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Create New Service\nworkspacesPage.visitWorkspacesPage();\nworkspacesPage.clickDefaultWorkspace();\ngatewayServicePage.selectGatewayServices();\ngatewayServicePage.clickAddGatewayService();\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\nconsole.log(`Service Name: ${serviceName}`);\n(0, serviceApi_3.waitForCreate201)();\n// Step 2:Navigate to Service List Page\ngatewayServicePage.selectGatewayServices();\n(0, serviceApi_2.waitForServices)();\n// Step 3: Disable the newly created service\ngatewayServicePage.disableServiceByName(serviceName);\n(0, screenshot_1.attachScreenshot)('Service Diabled');\n// Step 4: Enable the same service again\ngatewayServicePage.enableServiceByName(serviceName);\n(0, screenshot_1.attachScreenshot)('Service Enabled');\n// Delete service flow can be added here for cleanup",
+              "err": {},
+              "uuid": "b3b60729-7ccf-42d2-a408-d521afc76ba4",
+              "parentUUID": "01abcb27-bda8-4684-95d5-38f331aae53e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "b3b60729-7ccf-42d2-a408-d521afc76ba4"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 17501,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

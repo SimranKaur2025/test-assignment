@@ -27,11 +27,10 @@ export default class CreateUpstreamPage {
 
   // Wait for dropdown option to appear and select it
   cy.get('[data-testid="select-add-item"]')
-    .contains(new RegExp(`^${name}`, 'i')) // match the typed text
+    .contains(new RegExp(`^${name}`, 'i'))
     .click();
 }
 
-  /** Save */
   clickSave() {
     cy.get(this.saveButton, { timeout: 10000 })
         .should('be.visible')

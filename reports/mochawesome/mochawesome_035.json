@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-29T14:14:38.321Z",
+    "end": "2025-09-29T14:14:38.607Z",
+    "duration": 286,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9f77dfc2-4202-48b8-86f2-d65773c6385e",
+      "title": "",
+      "fullFile": "cypress\\e2e\\proxy_traffic_flow.cy.ts",
+      "file": "cypress\\e2e\\proxy_traffic_flow.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4ba411d9-fc71-445b-9dcc-4800efb46369",
+          "title": "Traffic flows through Proxy (200 OK)",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 200 and includes Kong proxy headers",
+              "fullTitle": "Traffic flows through Proxy (200 OK) returns 200 and includes Kong proxy headers",
+              "timedOut": null,
+              "duration": 205,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const proxyUrl = Cypress.env(\"proxyUrl\");\nconst suffix = Cypress.env(\"suffix\");\ncy.request(`${proxyUrl}${routePath}${suffix}`).then((resp) => {\n    // status\n    expect(resp.status).to.eq(200);\n    // response body (httpbin returns JSON)\n    expect(resp.body).to.have.property('headers');\n    expect(resp.body).to.have.property('url');\n    expect(resp.body.url).to.match(/\\/get$/);\n    // ensure upstream URL contains httpbin\n    expect(resp.body.headers).to.have.property('Host', 'httpbin.konghq.com');\n    // Kong headers\n    const h = resp.headers;\n    expect(h).to.have.property('via');\n    expect(h).to.have.property('x-kong-proxy-latency');\n    expect(h).to.have.property('x-kong-upstream-latency');\n});",
+              "err": {},
+              "uuid": "2d38d5be-2c4e-4c58-aaeb-5c6556727eec",
+              "parentUUID": "4ba411d9-fc71-445b-9dcc-4800efb46369",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 404 for invalid path (handled by Kong)",
+              "fullTitle": "Traffic flows through Proxy (200 OK) returns 404 for invalid path (handled by Kong)",
+              "timedOut": null,
+              "duration": 31,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const proxyUrl = Cypress.env(\"proxyUrl\");\nconst invalidPath = \"/does-not-exist\";\nconst suffix = Cypress.env(\"suffix\");\ncy.request({\n    url: `${proxyUrl}${invalidPath}${suffix}`,\n    failOnStatusCode: false,\n}).then((resp) => {\n    // Status should be 404\n    expect(resp.status).to.eq(404);\n    // Server should be Kong\n    expect(resp.headers).to.have.property('server');\n    expect(String(resp.headers['server']).toLowerCase()).to.match(/^kong/);\n});",
+              "err": {},
+              "uuid": "8a5a7113-8cc4-4b9e-b1db-141a5ccebc8d",
+              "parentUUID": "4ba411d9-fc71-445b-9dcc-4800efb46369",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2d38d5be-2c4e-4c58-aaeb-5c6556727eec",
+            "8a5a7113-8cc4-4b9e-b1db-141a5ccebc8d"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 236,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

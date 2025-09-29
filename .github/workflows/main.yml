@@ -36,25 +36,16 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          headless: true
           config-file: cypress.config.ts
           spec: "cypress/e2e/**/*.cy.ts"
 
-      # Artifacts help reviewers see failures without rerunning locally
-      - name: Upload videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
-          if-no-files-found: ignore
-
+      # Artifacts
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+          name: Screenshots
+          path: reposts/screenshots
           if-no-files-found: ignore
 
       - name: Upload reports
@@ -62,9 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: reports
-          path: |
-            reports/**
-            junit/*.xml
+          path: reports/**
           if-no-files-found: ignore
 
       - name: Teardown

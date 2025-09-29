@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-09-29T13:35:43.917Z",
+    "end": "2025-09-29T13:36:07.940Z",
+    "duration": 24023,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "14567a59-c7a8-4db7-8444-e6c4b0d37384",
+      "title": "",
+      "fullFile": "cypress\\e2e\\create_service_full_url.cy.ts",
+      "file": "cypress\\e2e\\create_service_full_url.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "51a64d07-13bd-42b4-abd6-63e7590b836c",
+          "title": "Create Service via Full URL",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should create a Gateway Service successfully",
+              "fullTitle": "Create Service via Full URL should create a Gateway Service successfully",
+              "timedOut": null,
+              "duration": 23651,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Navigate to the Workspaces page\nworkspacesPage.visitWorkspacesPage();\nworkspacesPage.assertDefaultWorkspaceName(\"default\");\n// Step 2: Click on the default workspace\nworkspacesPage.clickDefaultWorkspace();\n// Step 3: Select Gateway Service from the side-bar\ngatewayServicePage.selectGatewayServices();\n// Step 4: Click upon Add New Gateway Service\ngatewayServicePage.clickAddGatewayService();\n// Step 5: Fill out the form\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\nconsole.log(`Service Name: ${serviceName}`);\n(0, screenshot_1.attachScreenshot)('GatewayService-created');\n//Validate success toast notification\n(0, toastNotifications_1.assertSuccessToast)(`Gateway Service \"${serviceName}\" successfully created`);\n(0, serviceApi_3.waitForCreate201)();\n// Step 6:Navigate to Service List Page\ngatewayServicePage.selectGatewayServices();\n(0, serviceApi_2.waitForServices)();\n// Step 7: Verify Protocol + Host in row\ngatewayServicePage.assertRowProtocolHost(serviceName, protocol, host);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected '<div.k-table-view.k-table-data>' to be 'visible'\n\nThis element `<div.k-table-view.k-table-data>` is not visible because its ancestor has `position: fixed` CSS property and it is overflowed by other elements. How about scrolling to the element with `cy.scrollIntoView()`?",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected '<div.k-table-view.k-table-data>' to be 'visible'\n\nThis element `<div.k-table-view.k-table-data>` is not visible because its ancestor has `position: fixed` CSS property and it is overflowed by other elements. How about scrolling to the element with `cy.scrollIntoView()`?\n    at GatewayServicePage.getRowByServiceName (webpack://kong-tests/./cypress/pages/gatewayServicePage.ts:59:31)\n    at GatewayServicePage.assertRowProtocolHost (webpack://kong-tests/./cypress/pages/gatewayServicePage.ts:75:9)\n    at Context.eval (webpack://kong-tests/./cypress/e2e/create_service_full_url.cy.ts:56:23)",
+                "diff": null
+              },
+              "uuid": "a4ec3b6a-e926-41c6-a2cc-5642ba7aa65d",
+              "parentUUID": "51a64d07-13bd-42b4-abd6-63e7590b836c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "a4ec3b6a-e926-41c6-a2cc-5642ba7aa65d"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 23651,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

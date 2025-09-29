@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-29T13:29:08.099Z",
+    "end": "2025-09-29T13:29:25.633Z",
+    "duration": 17534,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "eeeab4b2-7060-4af6-9a51-3959c25d27a3",
+      "title": "",
+      "fullFile": "cypress\\e2e\\error_validation_duplicate_servicename.cy.ts",
+      "file": "cypress\\e2e\\error_validation_duplicate_servicename.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "3579cd18-df7f-4151-877f-36135d067ee2",
+          "title": "Duplicate Service Name",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should validate duplicate service name error",
+              "fullTitle": "Duplicate Service Name should validate duplicate service name error",
+              "timedOut": null,
+              "duration": 17275,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Step 1: Navigate to the Workspaces page\nworkspacesPage.visitWorkspacesPage();\nworkspacesPage.assertDefaultWorkspaceName(\"default\");\n// Step 2: Click on the default workspace\nworkspacesPage.clickDefaultWorkspace();\n// Step 3: Select Gateway Service from the side-bar\ngatewayServicePage.selectGatewayServices();\n// Step 4: Click upon Add New Gateway Service\ngatewayServicePage.clickAddGatewayService();\n// Step 5: Fill out the form\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\nconsole.log(`Created Service: ${serviceName}`);\n//Validate success toast notification\n(0, toastNotifications_1.assertSuccessToast)(`Gateway Service \"${serviceName}\" successfully created`);\n(0, screenshot_1.attachScreenshot)('GatewayService-created');\n// Create new service with same service name\ngatewayServicePage.selectGatewayServices();\ngatewayServicePage.clickAddGatewayService();\ncreateServicePage.enterServiceUrl(serviceUrl);\ncreateServicePage.enterServiceName(serviceName);\ncreateServicePage.clickSave();\n// Assertion- UI shows error message\ncreateServicePage.assertDuplicateServiceNameError();\n(0, screenshot_1.attachScreenshot)('Duplicate Service-error');",
+              "err": {},
+              "uuid": "22b0f6d0-90ed-486e-bfbc-26f690e147f2",
+              "parentUUID": "3579cd18-df7f-4151-877f-36135d067ee2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "22b0f6d0-90ed-486e-bfbc-26f690e147f2"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 17275,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

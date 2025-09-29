@@ -3,31 +3,44 @@ import GatewayServicePage from "../pages/gatewayServicePage";
 import CreateServicePage from "../pages/createServicePage";
 import { generateInvalidServiceUrl } from "../utils/uniqueDataGenerator";
 import { attachScreenshot } from "../utils/screenshot";
+import { INVALID_URLS } from "../utils/uniqueDataGenerator";
 
-describe("Kong Manager - Workspaces Page", () => {
+describe("Create Service - FullUrl Required Field Validation", () => {
   const workspacesPage = new WorkspacesPage();
   const gatewayServicePage = new GatewayServicePage();
   const createServicePage = new CreateServicePage();
   const invalidServiceUrl = generateInvalidServiceUrl();
+  const ERROR_MESSAGE = "must follow a valid format";
 
-  it("should load the Workspaces page and show default workspace", () => {
-    // Step 1: Navigate to the Workspaces page
+  beforeEach(() => {
+    // Navigate to Add Gateway Service form
     workspacesPage.visitWorkspacesPage();
-    workspacesPage.assertDefaultWorkspaceName("default");
-
-    // Step 2: Click on the default workspace
     workspacesPage.clickDefaultWorkspace();
-
-    // Step 3: Select Gateway Service from the side-bar
     gatewayServicePage.selectGatewayServices();
-
-    // Step 4: Click upon Add New Gateway Service
     gatewayServicePage.clickAddGatewayService();
+  });
 
-    // Step 5: Enter Invalid Url in the FullUrl field
-    createServicePage.enterServiceUrl(invalidServiceUrl);
-    
-    createServicePage.assertUrlValidationError("must follow a valid format");
+  // Iterate through each invalid input
+  INVALID_URLS.forEach((url) => {
+    it(`should show inline error for invalid Full URL: "${url || "blank"}"`, () => {
+      // Enter value (or clear if blank) to trigger validation
+      if (url === "") {
+        cy.get('[data-testid="gateway-service-url-input"]').clear().blur();
+      } else {
+        createServicePage.enterServiceUrl(url);
+      }
+      createServicePage.assertUrlValidationError(ERROR_MESSAGE);
 
+      // Save button should not be enabled
+      cy.contains("button", /^Save$/).should("be.disabled");
+    });
+  });
+
+  it("should accept valid Url and clear error message", () => {
+    // Enter a valid service URL
+    createServicePage.enterServiceUrl("http://httpbin.konghq.com");
+    attachScreenshot('No Inline Error with Valid URL');
+    // And Save button should be enabled
+    cy.contains("button", /^Save$/).should("be.enabled");
   });
 });

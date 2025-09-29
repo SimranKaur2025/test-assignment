@@ -15,6 +15,9 @@ export default defineConfig({
       suffix: "/get" 
     }
   },
+  video: true,              //videos are recorded
+  screenshotsFolder: "cypress/screenshots",
+  videosFolder: "cypress/videos",
   reporter: "mochawesome",
   reporterOptions: {
     reportDir: "reports/mochawesome",
